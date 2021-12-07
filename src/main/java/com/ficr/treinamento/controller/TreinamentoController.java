@@ -49,6 +49,7 @@ public class TreinamentoController {
 	}
 
 	@PutMapping("/treinamento")
+	@ResponseStatus(HttpStatus.OK)
 	public void updateTreinamento(@RequestBody Treinamento treinamento) {
 		if (treinamento.getCodigo() > 0) {
 			trp.save(treinamento);
