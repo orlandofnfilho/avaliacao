@@ -16,50 +16,51 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ficr.treinamento.model.Empregado;
-import com.ficr.treinamento.repository.EmpregadoRepository;
+import com.ficr.treinamento.model.Treinamento;
+import com.ficr.treinamento.repository.TreinamentoRepository;
 
 @RestController
-@RequestMapping("/empregados")
+@RequestMapping("/treinamentos")
 @CrossOrigin(origins = "*")
-public class EmpregadoController {
+public class TreinamentoController {
 
 	@Autowired
-	private EmpregadoRepository erp;
+	private TreinamentoRepository trp;
 
-	@GetMapping("/empregados")
+	@GetMapping("/treinamentos")
 	@ResponseStatus(HttpStatus.OK)
-	public List<Empregado> list() {
-		return erp.findAll();
-	}
-
-	@GetMapping("/empregados/{matricula}")
-	@ResponseStatus(HttpStatus.OK)
-	public Optional<Empregado> showEmpregado(@PathVariable Long matricula) {
-		return erp.findById(matricula);
+	public List<Treinamento> listTreinamentos() {
+		return trp.findAll();
 
 	}
 
-	@PostMapping("/empregado")
+	@GetMapping("/treinamento/{codigo}")
+	@ResponseStatus(HttpStatus.OK)
+	public Optional<Treinamento> showTreinamento(@PathVariable Long codigo) {
+		return trp.findById(codigo);
+
+	}
+
+	@PostMapping("/treinamento")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Empregado addEmpregado(@RequestBody Empregado empregado) {
-		return erp.save(empregado);
+	public Treinamento addTreinamento(@RequestBody Treinamento treinamento) {
+		return trp.save(treinamento);
 
 	}
 
-	@PutMapping("/empregado")
-	@ResponseStatus(HttpStatus.OK)
-	public void updateEmpregado(@RequestBody Empregado empregado) {
-		if (empregado.getMatricula() > 0) {
-			erp.save(empregado);
+	@PutMapping("/treinamento")
+	public void updateTreinamento(@RequestBody Treinamento treinamento) {
+		if (treinamento.getCodigo() > 0) {
+			trp.save(treinamento);
 		}
 
 	}
 
-	@DeleteMapping("/empregados/{matricula}")
+	@DeleteMapping("/treinamento/{codigo}")
 	@ResponseStatus(HttpStatus.OK)
-	public void deletarEmpregado(@PathVariable Long matricula) {
-		erp.deleteById(matricula);
+	public void deletarTreinamento(@PathVariable Long codigo) {
+		trp.deleteById(codigo);
+
 	}
 
 }
